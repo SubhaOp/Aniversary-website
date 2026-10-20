@@ -1,98 +1,175 @@
-/* Responsive sizing overrides. Keeps the existing HTML and JavaScript behavior. */
-* {
-  box-sizing: border-box;
-}
-
-html,
-body {
+/* Responsive styling that keeps the original romantic layout and makes controls usable. */
+* { box-sizing: border-box; }
+html, body {
   width: 100%;
   min-height: 100%;
   margin: 0;
   overflow-x: hidden;
 }
-
-/* Keep the animated canvas behind the website content without causing overflow. */
+body {
+  min-height: 100vh;
+  min-height: 100dvh;
+  background: #171e26;
+  font-family: Georgia, "Times New Roman", serif;
+}
 canvas {
   position: fixed;
   inset: 0;
   display: block;
-  width: 100%;
-  height: 100%;
-  max-width: 100%;
-  z-index: -1;
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  z-index: 0;
   pointer-events: none;
 }
-
-#imgTxt {
-  width: 100%;
-  max-width: 100%;
-  padding: 12px 16px;
+#content, #typeDiv, #imgTxt, #heartTxt {
+  position: fixed;
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
   text-align: center;
-  overflow-wrap: anywhere;
+  z-index: 2;
 }
-
-/* The important fix: constrain both dimensions while preserving photo proportions. */
-#img {
-  display: block;
-  width: auto;
+#content {
+  top: max(10px, env(safe-area-inset-top));
+  width: min(96vw, 900px);
   height: auto;
-  max-width: min(82vw, 560px);
-  max-height: 55vh;
-  object-fit: contain;
-  margin: 12px auto 0;
+  padding: 0 10px;
+  color: white;
 }
-
-#Txt,
-#tmp {
-  display: inline-block;
-  max-width: min(88vw, 700px);
-  white-space: normal;
-  overflow-wrap: anywhere;
+#together {
+  margin: 0 0 8px;
+  font-size: clamp(18px, 3.3vw, 25px);
+  line-height: 1.25;
+  color: white;
 }
-
-#content,
-#typeDiv,
-#heartTxt {
-  max-width: 100%;
-  padding-left: 12px;
-  padding-right: 12px;
-  text-align: center;
-  overflow-wrap: anywhere;
-}
-
 #timer {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   align-items: baseline;
-  gap: 6px 10px;
+  gap: 3px 8px;
+  color: white;
+  font-size: clamp(12px, 2.3vw, 17px);
 }
-
+#timer b {
+  font-size: clamp(15px, 2.7vw, 20px);
+  font-variant-numeric: tabular-nums;
+}
+#typeDiv {
+  top: 44%;
+  transform: translateY(-50%);
+  width: min(94vw, 760px);
+  padding: 0 12px;
+  color: white;
+  line-height: 1.7;
+  overflow-wrap: anywhere;
+}
+#txt1, #txt2 {
+  color: white;
+  font-size: clamp(16px, 2.8vw, 21px);
+}
+#imgTxt {
+  top: 18%;
+  bottom: 17%;
+  width: 100%;
+  height: auto;
+  padding: 0 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .35s ease;
+}
+#Txt, #tmp {
+  display: block;
+  width: min(92vw, 760px);
+  max-width: 100%;
+  flex: 0 0 auto;
+  text-align: center;
+  color: white;
+  font-size: clamp(14px, 2.6vw, 19px);
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
+#img {
+  display: block;
+  position: static;
+  width: auto !important;
+  height: auto !important;
+  max-width: min(88vw, 650px) !important;
+  max-height: min(54vh, 620px) !important;
+  object-fit: contain;
+  object-position: center;
+  margin: 0 auto;
+  border-radius: 12px;
+  box-shadow: 0 8px 28px rgba(0,0,0,.28);
+}
+#heartTxt {
+  top: auto;
+  bottom: max(18px, env(safe-area-inset-bottom));
+  width: 104px;
+  height: 94px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  opacity: 0;
+  z-index: 10;
+  pointer-events: auto;
+}
+#clickMe {
+  display: block;
+  width: 100%;
+  color: white;
+  font-size: 16px;
+  line-height: 1.2;
+  text-align: center;
+  text-shadow: 0 1px 4px #000;
+}
+#heart {
+  width: 76px;
+  height: 66px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#button {
+  display: block;
+  width: 72px;
+  height: 66px;
+  padding: 0;
+  margin: 0;
+  background: transparent url("../pic/love.png") center / contain no-repeat;
+  border: 0;
+  outline: none;
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  filter: drop-shadow(0 2px 5px rgba(0,0,0,.25));
+  transition: transform .12s ease, filter .12s ease;
+  pointer-events: auto;
+}
+#button:hover { transform: scale(1.06); }
+#button:active { transform: scale(.92); }
+#button:focus-visible { outline: 2px solid white; outline-offset: 5px; border-radius: 12px; }
 @media (max-width: 600px) {
-  #img {
-    max-width: 88vw;
-    max-height: 46vh;
-  }
-
-  #imgTxt {
-    padding: 10px 8px;
-  }
-
-  #Txt,
-  #tmp {
-    max-width: 92vw;
-  }
-
-  #content,
-  #typeDiv,
-  #heartTxt {
-    padding-left: 8px;
-    padding-right: 8px;
-  }
+  #content { top: max(12px, env(safe-area-inset-top)); }
+  #timer { gap: 3px 6px; }
+  #imgTxt { top: 19%; bottom: 18%; padding: 0 8px; gap: 7px; }
+  #img { max-width: 88vw !important; max-height: 48vh !important; border-radius: 9px; }
+  #heartTxt { width: 90px; height: 84px; bottom: max(12px, env(safe-area-inset-bottom)); }
+  #heart { width: 68px; height: 58px; }
+  #button { width: 64px; height: 58px; }
 }
-
-@media (min-width: 601px) and (max-height: 700px) {
-  #img {
-    max-height: 45vh;
-  }
+@media (max-height: 520px) {
+  #content { top: 5px; }
+  #imgTxt { top: 17%; bottom: 20%; }
+  #img { max-height: 42vh !important; }
+  #heartTxt { bottom: 5px; }
 }

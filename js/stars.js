@@ -6,11 +6,6 @@ const c = canvas.getContext('2d')
 canvas.width = innerWidth
 canvas.height = innerHeight
 
-window.addEventListener("resize", function() {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;     
-    init()
-});
 
 /*
 const mouse = {
@@ -138,16 +133,27 @@ function creatMountainRange(mountainAmount, height, color){
 }
 
 // Implementation
-const backgroundGradient = c.createLinearGradient(0, 0, canvas.width, canvas.height)
-backgroundGradient.addColorStop(0, '#171e26')
-backgroundGradient.addColorStop(1, '#3f586b')
+let backgroundGradient;
+let groundHeight = 0.09 * canvas.height;
+function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    groundHeight = 0.09 * canvas.height;
+    backgroundGradient = c.createLinearGradient(0, 0, canvas.width, canvas.height);
+    backgroundGradient.addColorStop(0, '#171e26');
+    backgroundGradient.addColorStop(1, '#3f586b');
+}
+resizeCanvas();
+window.addEventListener("resize", function() {
+    resizeCanvas();
+    init();
+});
 
 let stars
 let miniStars
 let backgroundStars
 let ticker = 0
 let randomSpawnRate = 75
-const groundHeight = 0.09 * canvas.height
 let inf = 1e9
 function init() {
     stars = []
@@ -164,7 +170,7 @@ function init() {
 
 // Animation Loop
 function animate() {
-    c.clearRect(0, 0, 0, canvas.height)
+    c.clearRect(0, 0, canvas.width, canvas.height)
     c.fillStyle = backgroundGradient
     c.fillRect(0, 0, canvas.width, canvas.height)
 
